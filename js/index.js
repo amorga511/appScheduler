@@ -3,7 +3,7 @@ var strFile;
 var arrFileStr = [];
 var arrFileForms = [];
 
-var arrGPS = [{"id":101, "name":"Iglesia Catedral", "det":"Location main church at down town central park", "state":1},
+var arrGPS = [{"id":101, "name":"Catedral Inmaculada Concepcion", "det":"Cronograma de actividades semana santa 2020 <br />Del 4-apr al 11-apr", "state":1},
 {"id":102, "name":"Location B dnl", "det":"Location main church at down town central park", "state":1},
 {"id":103, "name":"Location C dnl", "det":"Location main church at down town central park", "state":1},
 {"id":104, "name":"Location D dnl", "det":"Location main church at down town central park", "state":1},
@@ -55,6 +55,9 @@ function switch_menu(vId){
     }if(vId=='mFavs'){        
         hideDivs();
         $("#dvFavs").show();
+    }if(vId=='mMyOrg'){        
+        hideDivs();
+        $("#dvMyOrg").show();
     }
 }
 
@@ -64,22 +67,22 @@ function hideDivs(){
     $("#dvGPS").hide();    
     $("#dvCalendr").hide();
     $("#dvFavs").hide();
+    $("#dvMyOrg").hide();
     
     
 }
 
 function getGPS(){
-    strHtml = "";
-    
+    strHtml = "";    
                     
     $("#dvGPS").html(strHtml);
     for(i=0;i<arrGPS.length;i++){
         console.log(arrGPS[i].name);
         strHtml=    "<div class=\"border_dv\"><div class=\"row\"><div class=\"col-3\">";
         strHtml+=  "<img src=\"img/gps_clr.png\" width=\"100%\" /></div><div class=\"col-9\">";
-        strHtml+=   "<button id=\""+ arrGPS[i].id +"\" type=\"button\" class=\"btn btn-link\" style=\"float:right; top:0px\" onclick=\"showdetGPS(this)\">Ver</button>";
+        //strHtml+=   "<button id=\""+ arrGPS[i].id +"\" type=\"button\" class=\"btn btn-link\" style=\"float:right; top:0px\" onclick=\"showdetGPS(this)\">Ver</button>";
         strHtml+=   "<h5>"+ arrGPS[i].name +"</h5>";
-        strHtml+=   "<p>"+ arrGPS[i].desc +"</p></div></div>";
+        strHtml+=   "<p>"+ arrGPS[i].det +"</p><button type=\"button\" class=\"btn btn-outline-info btn-sm\">Info</button></div></div>";
         strHtml+=   "</div>";
         $("#dvGPS").append(strHtml);
     }    
