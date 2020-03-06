@@ -32,8 +32,7 @@ body{
     height: 45px;
     width: 100%;
     margin: 0;
-    padding: 0;
-    
+    padding: 0;    
     font-size: 0;
 }
 
@@ -59,19 +58,45 @@ body{
 }
 
 .divFrag{
-    border-radius: 5px;
     background-color: white;
     margin: 5px;
 }
 
 .item_list1 {
     border-bottom: solid #D8D8D8 1px;
-    padding: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
     padding-top: 10px;
-    padding-bottom: 10px;
+    line-height: 1.4em;
+}
+
+.item_list2 {
+    background-color: #F2F2F2;
+    border-bottom: solid #D8D8D8 1px;
+    padding: 6px;
     line-height: 1.4em;
 }
 
 .item_list1:hover {
     background-color: #F2F2F2;
+}
+
+.smenu_intr{
+    height: 32px;
+    width: 100%;
+    margin: 0;
+    margin-top: 12px;
+    padding: 3px;    
+    font-size: 0;
+    border-top:solid #D8D8D8 1px;
+}
+
+.smenu_intr li{
+    display:inline-block;
+    height: 30px;
+    width: 33%;
+    margin:0px;
+    padding: 0px;
+    font-size: 11px;    
+    text-align: center;
 }

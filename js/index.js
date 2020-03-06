@@ -50,9 +50,9 @@ function switch_menu(vId){
     if(vId=='mMenu'){        
         hideDivs();
         $("#dvMenu").show();
-    }if(vId=='mGPS'){        
+    }if(vId=='mOrg'){        
         hideDivs();
-        $("#dvGPS").show();
+        $("#dvOrgs").show();
         getGPS();
     }if(vId=='mCalendr'){        
         hideDivs();
@@ -70,7 +70,7 @@ function switch_menu(vId){
 function hideDivs(){        
     $("#dvMenu").hide();
     $("#dvHome").hide();
-    $("#dvGPS").hide();    
+    $("#dvOrgs").hide();    
     $("#dvCalendr").hide();
     $("#dvFavs").hide();
     $("#dvMyOrg").hide();
@@ -81,7 +81,7 @@ function hideDivs(){
 function getGPS(){
     strHtml = "";    
                     
-    $("#dvGPS").html(strHtml);
+    $("#dvOrgs").html(strHtml);
     for(i=0;i<arrGPS.length;i++){
         console.log(arrGPS[i].name);
 
@@ -96,7 +96,7 @@ function getGPS(){
         strHtml += "</tr>";
         strHtml += "</table>";
         strHtml += "</div>";*/
-        $("#dvGPS").append(vobj);
+        $("#dvOrgs").append(vobj);
     }    
 }
 
@@ -104,10 +104,17 @@ function getCalendar(){
     strHtml = "";
         
     $("#dvCalendr").html(strHtml);
+    vobj = drawListItem2('06-Mar-2020');
+    $("#dvCalendr").append(vobj);
+
     for(i=0;i<arrEvents.length;i++){
         console.log(arrEvents[i].name);
         vobj = drawListItem1(arrEvents[i].name, arrEvents[i].desc, 'img/calendar_cls.png', 0);
         $("#dvCalendr").append(vobj);
+        if(i==3){                
+            vobj = drawListItem2('07-Mar-2020');
+            $("#dvCalendr").append(vobj);
+        }
     }    
 }
 
@@ -169,11 +176,31 @@ function drawListItem1(vTitle, vDesc, vImg, vId){
 
     strHtml = '';
 
-    strHtml = "<div class=\"item_list1\">";
+    strHtml = "<div class=\"item_list1\" id=\"" + vId + "\">";
     strHtml += "<table width=\"100%\">";
     strHtml += "<tr>";
     strHtml += "<td width=\"70px\"><img src=\""+ vImg +"\" width=\"50px\" style=\"max-height:60px\"/></td>";
     strHtml += "<td><b>"+ vTitle +"</b><br>"+ vDesc +"</td>";
+    strHtml += "</tr><tr><td></td><td>";
+    strHtml += "<ul class=\"smenu_intr\">";
+    strHtml += "<li><a href=\"#\"  id=\"smLike\"><img src=\"img/like_gr.png\" width=\"18px\" height=\"20x\"/></a></li>";
+    strHtml += "<li><a href=\"#\" id=\"smFav\"><img src=\"img/star_gr.png\" width=\"18x\" height=\"20px\"/></a></li>";
+    strHtml += "<li><a href=\"#\" id=\"smDet\"><img src=\"img/show_gr.png\" width=\"18px\" height=\"20px\"/></a></li>";
+    strHtml += "</ul></td></tr>";
+    strHtml += "</table>";
+    strHtml += "</div>";
+    
+    return strHtml;
+}
+
+function drawListItem2(vTitle, vDesc, vId){
+
+    strHtml = '';
+
+    strHtml = "<div class=\"item_list2\" id=\"" + vId + "\">";
+    strHtml += "<table width=\"100%\">";
+    strHtml += "<tr>";
+    strHtml += "<td><b>"+ vTitle +"</b></td>";
     strHtml += "</tr>";
     strHtml += "</table>";
     strHtml += "</div>";
