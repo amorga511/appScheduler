@@ -183,9 +183,9 @@ function drawListItem1(vTitle, vDesc, vImg, vId){
     strHtml += "<td><b>"+ vTitle +"</b><br>"+ vDesc +"</td>";
     strHtml += "</tr><tr><td></td><td>";
     strHtml += "<ul class=\"smenu_intr\">";
-    strHtml += "<li><a href=\"#\"  id=\"smLike\"><img src=\"img/like_gr.png\" width=\"18px\" height=\"20x\"/></a></li>";
-    strHtml += "<li><a href=\"#\" id=\"smFav\"><img src=\"img/star_gr.png\" width=\"18x\" height=\"20px\"/></a></li>";
-    strHtml += "<li><a href=\"#\" id=\"smDet\"><img src=\"img/show_gr.png\" width=\"18px\" height=\"20px\"/></a></li>";
+    strHtml += "<li><a href=\"javascript:void(0)\"  onclick=\"\" id=\"smLike\"><img src=\"img/like_gr.png\" width=\"18px\" height=\"20x\"/></a></li>";
+    strHtml += "<li><a href=\"javascript:void(0)\" id=\"smFav\"><img src=\"img/star_gr.png\" width=\"18x\" height=\"20px\"/></a></li>";
+    strHtml += "<li><a href=\"javascript:void(0)\" id=\"smDet\"><img src=\"img/show_gr.png\" width=\"18px\" height=\"20px\"/></a></li>";
     strHtml += "</ul></td></tr>";
     strHtml += "</table>";
     strHtml += "</div>";
