@@ -82,7 +82,7 @@ function getGPS(){
         strHtml+=  "<img src=\"img/gps_clr.png\" width=\"100%\" /></div><div class=\"col-9\">";
         //strHtml+=   "<button id=\""+ arrGPS[i].id +"\" type=\"button\" class=\"btn btn-link\" style=\"float:right; top:0px\" onclick=\"showdetGPS(this)\">Ver</button>";
         strHtml+=   "<h5>"+ arrGPS[i].name +"</h5>";
-        strHtml+=   "<p>"+ arrGPS[i].det +"</p><button type=\"button\" class=\"btn btn-outline-info\">Info</button></div></div>";
+        strHtml+=   "<p>"+ arrGPS[i].det +"</p><button type=\"button\" class=\"btn btn-outline-info btn-sm\">Info</button></div></div>";
         strHtml+=   "</div>";
         $("#dvGPS").append(strHtml);
     }    
