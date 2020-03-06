@@ -45,9 +45,9 @@ $(document).ready(function(){
     var contentType = "image/png";
     // if cordova.file is not available use instead :
     //var folderpath = "file:///storage/emulated/0/";
-    var folderpath = cordova.file.documentsDirectory;
+    var folderpath = cordova.file.externalRootDirectory;
     var filename = "ourcodeworld.png";
-
+    alert(folderpath);
     savebase64AsImageFile(folderpath,filename,myBase64,contentType);
 
 });
