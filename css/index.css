@@ -59,15 +59,19 @@ body{
 }
 
 .divFrag{
-    padding:10px;
     border-radius: 5px;
     background-color: white;
     margin: 5px;
 }
 
-.border_dv {
-    border: solid #D8D8D8 1px;
-    padding: 10px;
-    border-radius: 5px;
-    border-collapse: collapse;
+.item_list1 {
+    border-bottom: solid #D8D8D8 1px;
+    padding: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    line-height: 1.4em;
+}
+
+.item_list1:hover {
+    background-color: #F2F2F2;
 }

@@ -13,7 +13,13 @@ var arrGPS = [{"id":101, "name":"Catedral Inmaculada Concepcion", "det":"Cronogr
 
 var arrEvents = [{"id_ev":"dnl202001", "name":"Test event 1", "desc":"description of event", "fecha":2020030051780, "status":100},
 {"id_ev":"dnl202002", "name":"Test event 2", "desc":"description of event", "fecha":2020030052080, "status":100},
-{"id_ev":"dnl202003", "name":"Test event 3", "desc":"description of event", "fecha":2020030052280, "status":100}];
+{"id_ev":"dnl202003", "name":"Test event 3", "desc":"description of event asdf asdf asdf asdf asdf asdf asdfsa ", "fecha":2020030052280, "status":100},
+{"id_ev":"dnl202003", "name":"Test event 3", "desc":"description of event asdf asdf asdf asdf asdf asdf asdfsa ", "fecha":2020030052280, "status":100},
+{"id_ev":"dnl202003", "name":"Test event 3", "desc":"description of event asdf asdf asdf asdf asdf asdf asdfsa ", "fecha":2020030052280, "status":100},
+{"id_ev":"dnl202003", "name":"Test event 3", "desc":"description of event asdf asdf asdf asdf asdf asdf asdfsa ", "fecha":2020030052280, "status":100},
+{"id_ev":"dnl202003", "name":"Test event 3", "desc":"description of event asdf asdf asdf asdf asdf asdf asdfsa ", "fecha":2020030052280, "status":100},
+{"id_ev":"dnl202003", "name":"Test event 3", "desc":"description of event asdf asdf asdf asdf asdf asdf asdfsa ", "fecha":2020030052280, "status":100},
+{"id_ev":"dnl202003", "name":"Test event 3", "desc":"description of event asdf asdf asdf asdf asdf asdf asdfsa ", "fecha":2020030052280, "status":100}];
 
 
 document.addEventListener("deviceready", onDeviceReady, false);
@@ -78,15 +84,20 @@ function getGPS(){
     $("#dvGPS").html(strHtml);
     for(i=0;i<arrGPS.length;i++){
         console.log(arrGPS[i].name);
-        strHtml=    "<div class=\"border_dv\"><div class=\"row\"><div class=\"col-3\">";
-        strHtml+=  "<img src=\"img/gps_clr.png\" width=\"100%\" /></div><div class=\"col-9\">";
-        //strHtml+=   "<button id=\""+ arrGPS[i].id +"\" type=\"button\" class=\"btn btn-link\" style=\"float:right; top:0px\" onclick=\"showdetGPS(this)\">Ver</button>";
-        strHtml+=   "<h5>"+ arrGPS[i].name +"</h5>";
-        strHtml+=   "<p>"+ arrGPS[i].det +"</p><button type=\"button\" class=\"btn btn-outline-info btn-sm\">Info</button></div></div>";
-        strHtml+=   "</div>";
-        $("#dvGPS").append(strHtml);
+
+        
+        vobj = drawListItem1(arrGPS[i].name, arrGPS[i].det, 'img/gps_clr.png', 0);
+
+        /*strHtml = "<div class=\"item_list1\">";
+        strHtml += "<table width=\"100%\">";
+        strHtml += "<tr>";
+        strHtml += "<td width=\"70px\"><img src=\"img/gps_clr.png\" width=\"50px\" style=\"max-height:60px\"/></td>";
+        strHtml += "<td><b>"+ arrGPS[i].name +"</b><br>"+ arrGPS[i].det +"</td>";
+        strHtml += "</tr>";
+        strHtml += "</table>";
+        strHtml += "</div>";*/
+        $("#dvGPS").append(vobj);
     }    
-    $("#dvGPS").append('<br />');
 }
 
 function getCalendar(){
@@ -95,15 +106,9 @@ function getCalendar(){
     $("#dvCalendr").html(strHtml);
     for(i=0;i<arrEvents.length;i++){
         console.log(arrEvents[i].name);
-        strHtml=    "<div class=\"border_dv\"><div class=\"row\"><div class=\"col-3\">";
-        strHtml+=  "<img src=\"img/calendar_cls.png\" width=\"100%\" /></div><div class=\"col-9\">";
-        //strHtml+=   "<button id=\""+ arrEvents[i].id +"\" type=\"button\" class=\"btn btn-link\" style=\"float:right; top:0px\" onclick=\"showdetGPS(this)\">Ver</button>";
-        strHtml+=   "<h5>"+ arrEvents[i].name +"</h5>";
-        strHtml+=   "<p>"+ arrEvents[i].desc +"</p></div></div>";
-        strHtml+=   "</div>";
-        $("#dvCalendr").append(strHtml);
+        vobj = drawListItem1(arrEvents[i].name, arrEvents[i].desc, 'img/calendar_cls.png', 0);
+        $("#dvCalendr").append(vobj);
     }    
-    $("#dvCalendr").append('<br />');
 }
 
 function showdetGPS(event){
@@ -159,3 +164,19 @@ function getHMS(){
     return strDate;
 }
 
+
+function drawListItem1(vTitle, vDesc, vImg, vId){
+
+    strHtml = '';
+
+    strHtml = "<div class=\"item_list1\">";
+    strHtml += "<table width=\"100%\">";
+    strHtml += "<tr>";
+    strHtml += "<td width=\"70px\"><img src=\""+ vImg +"\" width=\"50px\" style=\"max-height:60px\"/></td>";
+    strHtml += "<td><b>"+ vTitle +"</b><br>"+ vDesc +"</td>";
+    strHtml += "</tr>";
+    strHtml += "</table>";
+    strHtml += "</div>";
+    
+    return strHtml;
+}
