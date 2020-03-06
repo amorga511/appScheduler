@@ -44,8 +44,8 @@ $(document).ready(function(){
     // To define the type of the Blob
     var contentType = "image/png";
     // if cordova.file is not available use instead :
-    var folderpath = "file:///storage/emulated/0/";
-    //var folderpath = cordova.file.externalDataDirectory;
+    //var folderpath = "file:///storage/emulated/0/";
+    var folderpath = cordova.file.documentsDirectory;
     var filename = "ourcodeworld.png";
 
     savebase64AsImageFile(folderpath,filename,myBase64,contentType);
