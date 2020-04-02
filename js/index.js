@@ -242,6 +242,13 @@ function addFavsEvent(idEventFav){
         ejecutaSQL(vQry,0); console.log(vQry);
         arrEventFavs.push(idEveFinal);
         $("#img_" + idEventFav).attr('src','img/star_ye.png');
+
+        cordova.plugins.notification.local.schedule({
+            title: 'Evento:' + idEveFinal,
+            text: 'Prueba de Evento para notificacion',
+            foreground: true
+        });
+
     }else{
         ejecutaSQL("Delete from eventos_favs where id='" + idEveFinal + "'",0);
         arrEventFavs.splice(flag,1);
