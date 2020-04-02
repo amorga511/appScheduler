@@ -244,6 +244,7 @@ function addFavsEvent(idEventFav){
         $("#img_" + idEventFav).attr('src','img/star_ye.png');
 
         cordova.plugins.notification.local.schedule({
+            id:1,
             title: 'Evento:' + idEveFinal,
             text: 'Prueba de Evento para notificacion',
             foreground: true
