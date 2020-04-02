@@ -3,6 +3,9 @@ var strFile;
 var arrFileStr = [];
 var arrFileForms = [];
 
+var arrEventFavs = [];
+var arrEventLikes = [];
+
 var arrGPS = [{"id":101, "name":"Catedral Inmaculada Concepcion", "det":"Cronograma de actividades semana santa 2020 <br />Del 4-apr al 11-apr", "state":1},
 {"id":102, "name":"Location B dnl", "det":"Location main church at down town central park", "state":1},
 {"id":103, "name":"Location C dnl", "det":"Location main church at down town central park", "state":1},
@@ -78,16 +81,18 @@ function switch_menu(vId){
     }if(vId=='mCalendr'){        
         hideDivs();
         $("#dvCalendr").show();
-        getCalendar();
+        getCalendar(1);
     }if(vId=='mFavs'){        
         hideDivs();
         $("#dvFavs").show();
+        getCalendar(2);
     }if(vId=='mMyOrg'){        
         hideDivs();
         $("#dvMyOrg").show();
     }if(vId=='mBook'){        
         hideDivs();
         $("#dvBook").show();
+        listLecturas();
     }
 }
 
@@ -120,6 +125,11 @@ function mainPosts(){
     $("#dvHome").append(obj);
 }
 
+function listLecturas(){
+    obj = drawListItem2('04-Abr-2020', '', 0);
+    $("#dvBook").prepend(obj);
+}
+
 function getGPS(){
     strHtml = "";    
                     
@@ -142,22 +152,61 @@ function getGPS(){
     }    
 }
 
-function getCalendar(){
+function getCalendar(vFlagEv){
     strHtml = "";
         
-    $("#dvCalendr").html(strHtml);
-    vobj = drawListItem2('06-Mar-2020');
-    $("#dvCalendr").append(vobj);
-
-    for(i=0;i<arrEvents.length;i++){
-        console.log(arrEvents[i].name);
-        vobj = drawListItem1(arrEvents[i].name, arrEvents[i].desc, 'img/calendar_cls.png', 0);
+    if(vFlagEv==1){
+        $("#dvCalendr").html(strHtml);
+        vobj = drawListItem2('06-Mar-2020');
         $("#dvCalendr").append(vobj);
-        if(i==3){                
-            vobj = drawListItem2('07-Mar-2020');
+
+        for(i=0;i<arrEvents.length;i++){
+            console.log(arrEvents[i].name);
+            
+            vobj = drawListItem1(arrEvents[i].name, arrEvents[i].desc, 'img/calendar_cls.png', arrEvents[i].id_ev + "_E");
             $("#dvCalendr").append(vobj);
+            if(i==3){                
+                vobj = drawListItem2('07-Mar-2020');
+                $("#dvCalendr").append(vobj);
+            }
+        } 
+        for(i=0;i<arrEventFavs.length;i++){            
+            $("#img_" + arrEventFavs[i] + "_E").attr('src','img/star_ye.png');
+            console.log(arrEventFavs[i]);
         }
-    }    
+        for(i=0;i<arrEventLikes.length;i++){            
+            $("#imgL_" + arrEventLikes[i] + "_E").attr('src','img/like_blue.png');
+            console.log(arrEventLikes[i]);
+        }
+    }else if(vFlagEv==2){
+        
+        $("#dvFavs").html(strHtml);
+        vobj = drawListItem2('06-Mar-2020');
+        $("#dvFavs").append(vobj);
+
+        for(i=0;i<arrEvents.length;i++){
+            console.log(arrEvents[i].name);
+            flagFav = arrEventFavs.indexOf(arrEvents[i].id_ev);
+            if(flagFav>-1){
+                vobj = drawListItem1(arrEvents[i].name, arrEvents[i].desc, 'img/calendar_cls.png', arrEvents[i].id_ev + '_F');
+                $("#dvFavs").append(vobj);
+            }          
+            if(i==3){                
+                vobj = drawListItem2('07-Mar-2020');
+                $("#dvFavs").append(vobj);
+            }
+        } 
+
+        for(i=0;i<arrEventFavs.length;i++){            
+            $("#img_" + arrEventFavs[i] + "_F").attr('src','img/star_ye.png');
+            console.log(arrEventFavs[i]);
+        }
+        for(i=0;i<arrEventLikes.length;i++){            
+            $("#imgL_" + arrEventLikes[i] + "_F").attr('src','img/like_blue.png');
+            console.log(arrEventLikes[i]);
+        }
+    }
+       
 }
 
 function showdetGPS(event){
@@ -165,11 +214,41 @@ function showdetGPS(event){
 }
 
 function addLikeEvent(vIdEvent){
-    console.log(vIdEvent);
+    idEveFinal = vIdEvent.substring(0, vIdEvent.length-2);
+    flag =  arrEventLikes.indexOf(idEveFinal);
+    if(flag==-1){
+        vQry = "insert into eventos_like values('";
+        vQry += idEveFinal + "','default')";
+        //ejecutaSQL("Delete from eventos_favs where id='" + idEventFav + "'",0);
+        ejecutaSQL(vQry,0); console.log(vQry);
+        arrEventLikes.push(idEveFinal);
+        $("#imgL_" + vIdEvent).attr('src','img/like_blue.png');
+    }else{
+        ejecutaSQL("Delete from eventos_like where id='" + idEveFinal + "'",0);
+        arrEventLikes.splice(flag,1);
+        $("#imgL_" + vIdEvent).attr('src','img/like_gr.png');
+    }    
+    console.log(arrEventLikes);   
+    $("#dvHeader").focus();
 }
 
 function addFavsEvent(idEventFav){
-    console.log(idEventFav);
+    idEveFinal = idEventFav.substring(0, idEventFav.length-2);
+    flag =  arrEventFavs.indexOf(idEveFinal);
+    if(flag==-1){
+        vQry = "insert into eventos_favs values('";
+        vQry += idEveFinal + "','default')";
+        //ejecutaSQL("Delete from eventos_favs where id='" + idEventFav + "'",0);
+        ejecutaSQL(vQry,0); console.log(vQry);
+        arrEventFavs.push(idEveFinal);
+        $("#img_" + idEventFav).attr('src','img/star_ye.png');
+    }else{
+        ejecutaSQL("Delete from eventos_favs where id='" + idEveFinal + "'",0);
+        arrEventFavs.splice(flag,1);
+        $("#img_" + idEventFav).attr('src','img/star_gr.png');
+    }    
+    console.log(arrEventFavs);   
+    $("#dvHeader").focus();
 }
 
 
@@ -233,8 +312,8 @@ function drawListItem1(vTitle, vDesc, vImg, vId){
     strHtml += "<td><b>"+ vTitle +"</b><br>"+ vDesc +"</td>";
     strHtml += "</tr><tr><td></td><td>";
     strHtml += "<ul class=\"smenu_intr\">";
-    strHtml += "<li><a href=\"javascript:void(0)\"  onclick=\"addLikeEvent('"+ vId +"')\" id=\"smLike\"><img src=\"img/like_gr.png\" width=\"18px\" height=\"20x\"/></a></li>";
-    strHtml += "<li><a href=\"javascript:void(0)\" onclick=\"addFavsEvent('"+ vId +"')\" id=\"smFav\"><img src=\"img/star_gr.png\" width=\"18x\" height=\"20px\"/></a></li>";
+    strHtml += "<li><a href=\"javascript:void(0)\"  onclick=\"addLikeEvent('"+ vId +"')\" id=\"smLike\"><img id=\"imgL_"+ vId +"\" src=\"img/like_gr.png\" width=\"18px\" height=\"20x\"/></a></li>";
+    strHtml += "<li><a href=\"javascript:void(0)\" onclick=\"addFavsEvent('"+ vId +"')\" id=\"smFav\"><img id=\"img_"+ vId +"\" src=\"img/star_gr.png\" width=\"18x\" height=\"20px\"/></a></li>";
     //strHtml += "<li><a href=\"javascript:void(0)\" id=\"smDet\"><img src=\"img/show_gr.png\" width=\"18px\" height=\"20px\"/></a></li>";
     strHtml += "</ul></td></tr>";
     strHtml += "</table>";
@@ -262,13 +341,13 @@ function drawListItem2(vTitle, vDesc, vId){
 function drawItemMain(vId, vTitle, vDesc, vFech, vTipe, vMultimedia){
     strHtml = '';
 
-    strHtml += '<div class="card" style="padding-bottom: 10px; padding-top:0px; border-bottom:solid #D8D8D8 4px;">';
+    strHtml += '<div class="card" style="padding-bottom: 10px; padding-top:0px; border-bottom:solid #D8D8D8 8px;">';
     if(vTipe==101){
         strHtml += '<img class="card-img-top ifrmFace" src="'+ vMultimedia.url +'" alt="Card image cap"></img>'
     }else if (vTipe==102){
         strHtml += '<iframe class="ifrmFace" src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2F'+ vMultimedia.url +'%2Fvideos%2F'+ vMultimedia.id +'%2F&width=500&show_text=false&height=281&appId" width="100%"  height="200px" style="border:none;overflow:hidden" scrolling="no" frameborder="1" allowTransparency="true" allow="encrypted-media" allowFullScreen="true" style="padding-bottom: 0px;"></iframe>';
     }else if (vTipe==103){
-        strHtml += '<iframe class="ifrmFace" width="100%" height="200px" src="https://www.youtube.com/embed/'+ vMultimedia.id +'"></iframe>';
+        strHtml += '<iframe class="ifrmFace" width="100%" height="200px" src="https://www.youtube.com/embed/'+ vMultimedia.id +'" allowfullscreen></iframe>';
     }
     
     strHtml += '<div class="card-body">';
