@@ -63,7 +63,7 @@ body{
 }
 
 .item_list1 {
-    border-bottom: solid #D8D8D8 1px;
+    border-bottom: solid #D8D8D8 4px;
     padding-left: 5px;
     padding-right: 5px;
     padding-top: 10px;
@@ -99,4 +99,17 @@ body{
     padding: 0px;
     font-size: 11px;    
     text-align: center;
+}
+
+.smenu_intr li:hover{
+    border:solid blue 1px;
+}
+
+.cfech{
+    font-size: 0.8em;
+    padding: 0;
+    margin: 0;
+    position:absolute;
+    right: 10px;
+    color: #585858;
 }

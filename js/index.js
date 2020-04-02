@@ -30,6 +30,7 @@ function onDeviceReady() {
 
 $(document).ready(function(){  
     switch_menu('mHome');
+    resizer();
     $("#mHome").css('border-top', 'solid 3px red');
 
     $(".menubar a").on('click', function(e){
@@ -54,11 +55,18 @@ $(document).ready(function(){
 
 });
 
+function resizer(){
+    vWithFace = $(".ifrmFace").width();
+    $(".ifrmFace").height(vWithFace*0.57);
+    console.log(vWithFace);
+}
+
 
 function switch_menu(vId){
     if(vId=='mHome'){ 
         hideDivs();
         $("#dvHome").show();
+        mainPosts();
     }
     if(vId=='mMenu'){        
         hideDivs();
@@ -77,6 +85,9 @@ function switch_menu(vId){
     }if(vId=='mMyOrg'){        
         hideDivs();
         $("#dvMyOrg").show();
+    }if(vId=='mBook'){        
+        hideDivs();
+        $("#dvBook").show();
     }
 }
 
@@ -86,9 +97,27 @@ function hideDivs(){
     $("#dvOrgs").hide();    
     $("#dvCalendr").hide();
     $("#dvFavs").hide();
-    $("#dvMyOrg").hide();
+    $("#dvMyOrg").hide();    
+    $("#dvBook").hide();
     
     
+}
+
+
+function mainPosts(){   
+    $("#dvHome").html(''); 
+    var obj;
+    var mult = {url:"unetvhn", id:"3189567004600930"};
+    obj = drawItemMain(0, 'Prueba 1', 'texto de prueba para anuncion numero 1', '02-Abr-2020', 102,mult);    
+    $("#dvHome").append(obj);
+    mult = {url:"unetvhn", id:"nu7vJjVt6N0"};
+    obj = drawItemMain(0, 'Prueba 2', 'texto de prueba para anuncion numero 2', '02-Abr-2020', 103,mult); 
+    $("#dvHome").append(obj);    
+    mult = {url:"https://www.vaticannews.va/content/dam/vaticannews/agenzie/images/srv/2020/04/02/2020-04-02-messa-santa-marta/1585806777192.JPG/_jcr_content/renditions/cq5dam.thumbnail.cropped.750.422.jpeg", id:"0"};
+    obj = drawItemMain(0, 'Prueba 3', 'texto de prueba para anuncion numero 2', '02-Abr-2020', 101,mult); 
+    $("#dvHome").append(obj);
+    obj = drawItemMain(0, 'Prueba 4', 'texto de prueba para anuncion numero 2', '02-Abr-2020', 0,mult); 
+    $("#dvHome").append(obj);
 }
 
 function getGPS(){
@@ -133,6 +162,14 @@ function getCalendar(){
 
 function showdetGPS(event){
     console.log(event);
+}
+
+function addLikeEvent(vIdEvent){
+    console.log(vIdEvent);
+}
+
+function addFavsEvent(idEventFav){
+    console.log(idEventFav);
 }
 
 
@@ -196,9 +233,9 @@ function drawListItem1(vTitle, vDesc, vImg, vId){
     strHtml += "<td><b>"+ vTitle +"</b><br>"+ vDesc +"</td>";
     strHtml += "</tr><tr><td></td><td>";
     strHtml += "<ul class=\"smenu_intr\">";
-    strHtml += "<li><a href=\"javascript:void(0)\"  onclick=\"\" id=\"smLike\"><img src=\"img/like_gr.png\" width=\"18px\" height=\"20x\"/></a></li>";
-    strHtml += "<li><a href=\"javascript:void(0)\" id=\"smFav\"><img src=\"img/star_gr.png\" width=\"18x\" height=\"20px\"/></a></li>";
-    strHtml += "<li><a href=\"javascript:void(0)\" id=\"smDet\"><img src=\"img/show_gr.png\" width=\"18px\" height=\"20px\"/></a></li>";
+    strHtml += "<li><a href=\"javascript:void(0)\"  onclick=\"addLikeEvent('"+ vId +"')\" id=\"smLike\"><img src=\"img/like_gr.png\" width=\"18px\" height=\"20x\"/></a></li>";
+    strHtml += "<li><a href=\"javascript:void(0)\" onclick=\"addFavsEvent('"+ vId +"')\" id=\"smFav\"><img src=\"img/star_gr.png\" width=\"18x\" height=\"20px\"/></a></li>";
+    //strHtml += "<li><a href=\"javascript:void(0)\" id=\"smDet\"><img src=\"img/show_gr.png\" width=\"18px\" height=\"20px\"/></a></li>";
     strHtml += "</ul></td></tr>";
     strHtml += "</table>";
     strHtml += "</div>";
@@ -218,6 +255,29 @@ function drawListItem2(vTitle, vDesc, vId){
     strHtml += "</table>";
     strHtml += "</div>";
     
+    return strHtml;
+}
+
+
+function drawItemMain(vId, vTitle, vDesc, vFech, vTipe, vMultimedia){
+    strHtml = '';
+
+    strHtml += '<div class="card" style="padding-bottom: 10px; padding-top:0px; border-bottom:solid #D8D8D8 4px;">';
+    if(vTipe==101){
+        strHtml += '<img class="card-img-top ifrmFace" src="'+ vMultimedia.url +'" alt="Card image cap"></img>'
+    }else if (vTipe==102){
+        strHtml += '<iframe class="ifrmFace" src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2F'+ vMultimedia.url +'%2Fvideos%2F'+ vMultimedia.id +'%2F&width=500&show_text=false&height=281&appId" width="100%"  height="200px" style="border:none;overflow:hidden" scrolling="no" frameborder="1" allowTransparency="true" allow="encrypted-media" allowFullScreen="true" style="padding-bottom: 0px;"></iframe>';
+    }else if (vTipe==103){
+        strHtml += '<iframe class="ifrmFace" width="100%" height="200px" src="https://www.youtube.com/embed/'+ vMultimedia.id +'"></iframe>';
+    }
+    
+    strHtml += '<div class="card-body">';
+    strHtml += '<h5 class="card-title">'+ vTitle +'</h5>';
+    strHtml += '<p class="card-text">' + vDesc + '</p>';
+    strHtml += '<label class="cfech">'+ vFech +'</label>';
+    strHtml += '</div>';
+    strHtml += '</div>';
+
     return strHtml;
 }
 
