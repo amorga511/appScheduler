@@ -29,6 +29,7 @@ document.addEventListener("deviceready", onDeviceReady, false);
 function onDeviceReady() {
     console.log(device.cordova);
     setTimeout(function(){navigator.vibrate(1000);}, 1000);
+    cordova.plugins.notification.local.hasPermission(function (granted) {alert('ok not')});
 }
 
 $(document).ready(function(){  
