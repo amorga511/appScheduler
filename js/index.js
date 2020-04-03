@@ -52,7 +52,7 @@ function oneNotification() {
                         foreground: true
                     });
                 }
-            }
+            });
         }
      });
 
