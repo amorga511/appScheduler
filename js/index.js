@@ -33,12 +33,30 @@ function onDeviceReady() {
 }
 
 function oneNotification() {
-    setTimeout(function(){navigator.vibrate(1000);}, 1000);  
-    cordova.plugins.notification.local.schedule({
-      title: 'My first notification',
-      text: 'Thats pretty easy...',
-      foreground: true
-    });
+    cordova.plugins.notification.local.hasPermission(function (granted) { 
+        if(granted){            
+            navigator.vibrate(500);  
+            cordova.plugins.notification.local.schedule({
+                title: 'My first notification',
+                text: 'Thats pretty easy...',
+                foreground: true
+              });
+        }else{            
+            navigator.vibrate(300);
+            cordova.plugins.notification.local.requestPermission(function (granted) {
+                if(granted){
+                    navigator.vibrate(200);  
+                    cordova.plugins.notification.local.schedule({
+                        title: 'My first notification',
+                        text: 'Thats pretty easy...',
+                        foreground: true
+                    });
+                }
+            }
+        }
+     });
+
+    
   }
 
 $(document).ready(function(){  
