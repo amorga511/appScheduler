@@ -30,21 +30,70 @@ function onDeviceReady() {
     console.log(device.cordova);
     cordova.plugins.notification.local.getDefaults();
     setTimeout(function(){navigator.vibrate(1000);}, 1000);    
+
+    
 }
 
-function setNoti(){
-    mintime = Date();
-    mintime.setMinutes(mintime.getMinutes() + 1);
-    cordova.plugin.notification.local.schedule({
-        id: 9,
-        title: "Test notification 9",
-        text: "This is a test notification",
-        at: mintime
-        // data: { secret:key }
-    });
+function testNotifications(){
 
-    alert('not added');
-}
+    document.addEventListener("deviceready", function () {
+    
+         console.warn("testNotifications Started");
+    
+         // Checks for permission
+         cordova.plugin.notification.local.hasPermission(function (granted) {
+    
+           console.warn("Testing permission");
+    
+           if( granted == false ) {
+    
+             console.warn("No permission");
+             // If app doesnt have permission request it
+             cordova.plugin.notification.local.registerPermission(function (granted) {
+    
+               console.warn("Ask for permission");
+               if( granted == true ) {
+    
+                 console.warn("Permission accepted");
+                 // If app is given permission try again
+                 testNotifications();
+    
+               } else {
+                 alert("We need permission to show you notifications");
+               }
+    
+             });
+           } else {
+    
+             var pathArray = window.location.pathname.split( "/www/" ),
+                 secondLevelLocation = window.location.protocol +"//"+ pathArray[0],
+                 now = new Date();
+    
+    
+             console.warn("sending notification");
+    
+             var isAndroid = false;
+    
+             if ( device.platform === "Android" ) {
+               isAndroid = true;
+             }
+    
+             cordova.plugin.notification.local.schedule({
+                 id: 9,
+                 title: "Test notification 9",
+                 text: "This is a test notification",
+                 sound: isAndroid ? "file://sounds/notification.mp3" : "file://sounds/notification.caf",
+                 at: new Date( new Date().getTime() + 10 )
+                 // data: { secret:key }
+             });
+    
+           }
+    
+         });
+    
+         }, false);
+    
+    };
 
 $(document).ready(function(){  
     switch_menu('mHome');
@@ -239,7 +288,7 @@ function addLikeEvent(vIdEvent){
         arrEventLikes.push(idEveFinal);
         $("#imgL_" + vIdEvent).attr('src','img/like_blue.png');
 
-        setNoti();
+        testNotifications();
     }else{
         ejecutaSQL("Delete from eventos_like where id='" + idEveFinal + "'",0);
         arrEventLikes.splice(flag,1);
