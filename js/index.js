@@ -32,7 +32,8 @@ function onDeviceReady() {
     
 }
 
-function oneNotification() {
+function oneNotification() {           
+    navigator.vibrate(300);
     cordova.plugins.notification.local.hasPermission(function (granted) { 
         if(granted){            
             navigator.vibrate(500);  
