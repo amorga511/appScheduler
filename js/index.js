@@ -31,15 +31,15 @@ function onDeviceReady() {
 }
 
 function oneNotification() {  
-    xv = new Date(2020, 3, 4, 00);
+    xv = new Date(2020, 3, 3, 7,05);
     //alert(xv);
     cordova.plugins.notification.local.hasPermission(function (granted) { 
         if(granted){            
             cordova.plugins.notification.local.schedule({
                 title: 'Mercados Bursatiles',
                 text: 'Evento Proximo a Iniciar',                
-                attachments: ['https://www.vaticannews.va/content/dam/vaticannews/agenzie/images/srv/2020/04/02/2020-04-02-messa-santa-marta/1585806777192.JPG/_jcr_content/renditions/cq5dam.thumbnail.cropped.750.422.jpeg']
-                //trigger: { at: xv }
+                attachments: ['https://www.vaticannews.va/content/dam/vaticannews/agenzie/images/srv/2020/04/02/2020-04-02-messa-santa-marta/1585806777192.JPG/_jcr_content/renditions/cq5dam.thumbnail.cropped.750.422.jpeg'],
+                trigger: { at: xv }
                 });
             
         }else{            
