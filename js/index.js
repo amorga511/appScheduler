@@ -31,7 +31,14 @@ function onDeviceReady() {
     setTimeout(function(){navigator.vibrate(1000);}, 1000);
     cordova.plugins.notification.local.registerPermission(function (granted) {
         // console.log('Permission has been granted: ' + granted);
-        alert(0100);
+        alert(100);
+    });
+
+    cordova.plugins.notification.local.schedule({
+        id:1,
+        title: 'Evento:',
+        text: 'Prueba de Evento para notificacion',
+        foreground: true
     });
 }
 
@@ -246,13 +253,6 @@ function addFavsEvent(idEventFav){
         ejecutaSQL(vQry,0); console.log(vQry);
         arrEventFavs.push(idEveFinal);
         $("#img_" + idEventFav).attr('src','img/star_ye.png');
-
-        cordova.plugins.notification.local.schedule({
-            id:1,
-            title: 'Evento:' + idEveFinal,
-            text: 'Prueba de Evento para notificacion',
-            foreground: true
-        });
 
     }else{
         ejecutaSQL("Delete from eventos_favs where id='" + idEveFinal + "'",0);
