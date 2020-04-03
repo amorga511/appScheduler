@@ -29,16 +29,13 @@ document.addEventListener("deviceready", onDeviceReady, false);
 function onDeviceReady() {
     console.log(device.cordova);
     setTimeout(function(){navigator.vibrate(1000);}, 1000);
-    cordova.plugins.notification.local.registerPermission(function (granted) {
-        // console.log('Permission has been granted: ' + granted);
-        alert(100);
-    });
 
-    cordova.plugins.notification.local.schedule({
-        id:1,
-        title: 'Evento:',
-        text: 'Prueba de Evento para notificacion',
-        foreground: true
+    cordova.plugin.notification.local.schedule({
+        id: 9,
+        title: "Test notification 9",
+        text: "This is a test notification",
+        at: new Date( new Date().getTime() + 10 )
+        // data: { secret:key }
     });
 }
 
