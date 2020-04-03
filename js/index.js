@@ -27,13 +27,13 @@ var arrEvents = [{"id_ev":"dnl202001", "name":"Test event 1", "desc":"descriptio
 
 document.addEventListener("deviceready", onDeviceReady, false);
 function onDeviceReady() {
-    console.log(device.cordova);
-    setTimeout(function(){navigator.vibrate(1000);}, 1000);    
+    console.log(device.cordova);  
     oneNotification();
     
 }
 
 function oneNotification() {
+    setTimeout(function(){navigator.vibrate(1000);}, 1000);  
     cordova.plugins.notification.local.schedule({
       title: 'My first notification',
       text: 'Thats pretty easy...',
@@ -253,7 +253,7 @@ function addFavsEvent(idEventFav){
         arrEventFavs.push(idEveFinal);
         $("#img_" + idEventFav).attr('src','img/star_ye.png');
         oneNotification();
-        
+
     }else{
         ejecutaSQL("Delete from eventos_favs where id='" + idEveFinal + "'",0);
         arrEventFavs.splice(flag,1);
