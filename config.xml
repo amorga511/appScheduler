@@ -8,7 +8,7 @@
   <preference name="phonegap-version" value="cli-7.1.0" />
   <preference name="DisallowOverscroll" value="true"/>
   <preference name="android-minSdkVersion" value="21"/>
-  <preference name="StatusBarBackgroundColor" value="#000000" />
+  <preference name="StatusBarBackgroundColor" value="255, 87, 51" />
   
   <preference name="AndroidPersistentFileLocation" value="Internal" />
   <preference name="AndroidPersistentFileLocation" value="Compatibility" />
