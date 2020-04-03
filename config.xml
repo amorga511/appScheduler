@@ -3,6 +3,8 @@
   <description>Online Services App</description>
 <author href="#">Arodi Morga</author>
   <content src="index.html"/>
+
+  <preference name="phonegap-version" value="3.5.0" />
   <preference name="DisallowOverscroll" value="true"/>
   <preference name="android-minSdkVersion" value="14"/>
   <preference name="StatusBarBackgroundColor" value="#000000" />
