@@ -36,7 +36,7 @@ function oneNotification() {
             cordova.plugins.notification.local.schedule({
                 title: 'Mercados Bursatiles',
                 text: 'Evento Proximo a Iniciar',                
-                attachments: ['file://img/appicon.png'],
+                attachments: ['file://img/banner1.jpg']
                 });
         }else{            
             cordova.plugins.notification.local.requestPermission(function (granted) {
