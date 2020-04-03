@@ -28,7 +28,6 @@ var arrEvents = [{"id_ev":"dnl202001", "name":"Test event 1", "desc":"descriptio
 document.addEventListener("deviceready", onDeviceReady, false);
 function onDeviceReady() {
     console.log(device.cordova);
-    cordova.plugins.notification.local.getDefaults();
     setTimeout(function(){navigator.vibrate(1000);}, 1000);    
 
     
