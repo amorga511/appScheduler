@@ -31,7 +31,7 @@ function onDeviceReady() {
 }
 
 function oneNotification() {  
-    xv = new Date(2020, 4, 2, 23,50);
+    xv = new Date(2020, 3, 4, 00);
     alert(xv);
     cordova.plugins.notification.local.hasPermission(function (granted) { 
         if(granted){            
@@ -39,7 +39,7 @@ function oneNotification() {
                 title: 'Mercados Bursatiles',
                 text: 'Evento Proximo a Iniciar',                
                 //attachments: ['file://img/banner1.jpg'],
-                //trigger: { at: new Date(2020, 4, 2, 23,50) }
+                trigger: { at: xv }
                 });
             
         }else{            
