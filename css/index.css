@@ -101,9 +101,6 @@ body{
     text-align: center;
 }
 
-.smenu_intr li:hover{
-    border:solid blue 1px;
-}
 
 .cfech{
     font-size: 0.8em;
