@@ -5,7 +5,7 @@
   <content src="index.html"/>
 
   
-  <preference name='phonegap-version' value='cli-9.0.1' />
+  <preference name='phonegap-version' value='cli-8.0.0' />
   <preference name="DisallowOverscroll" value="true"/>
   <preference name="android-minSdkVersion" value="21"/>
   <preference name="StatusBarBackgroundColor" value="#000000" />
