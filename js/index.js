@@ -27,38 +27,30 @@ var arrEvents = [{"id_ev":"dnl202001", "name":"Test event 1", "desc":"descriptio
 
 document.addEventListener("deviceready", onDeviceReady, false);
 function onDeviceReady() {
-    console.log(device.cordova);  
-    oneNotification();
-    
+    console.log(device.cordova);      
 }
 
-function oneNotification() {           
-    navigator.vibrate(300);
+function oneNotification() {  
     cordova.plugins.notification.local.hasPermission(function (granted) { 
         if(granted){            
-            navigator.vibrate(500);  
             cordova.plugins.notification.local.schedule({
-                title: 'My first notification',
-                text: 'Thats pretty easy...',
-                foreground: true
-              });
+                title: 'Mercados Bursatiles',
+                text: 'Evento Proximo a Iniciar',                
+                attachments: ['file://img/gps_clr.png'],
+                });
         }else{            
-            navigator.vibrate(300);
             cordova.plugins.notification.local.requestPermission(function (granted) {
                 if(granted){
                     navigator.vibrate(200);  
                     cordova.plugins.notification.local.schedule({
                         title: 'My first notification',
-                        text: 'Thats pretty easy...',
-                        foreground: true
+                        text: 'Thats pretty easy...'
                     });
                 }
             });
         }
-     });
-
-    
-  }
+    });
+}
 
 $(document).ready(function(){  
     switch_menu('mHome');
