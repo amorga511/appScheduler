@@ -31,14 +31,17 @@ function onDeviceReady() {
 }
 
 function oneNotification() {  
+    xv = new Date(2020, 4, 2, 23,50);
+    alert(xv);
     cordova.plugins.notification.local.hasPermission(function (granted) { 
         if(granted){            
             cordova.plugins.notification.local.schedule({
                 title: 'Mercados Bursatiles',
                 text: 'Evento Proximo a Iniciar',                
                 //attachments: ['file://img/banner1.jpg'],
-                trigger: { at: new Date(2020, 4, 2, 23,50) }
+                //trigger: { at: new Date(2020, 4, 2, 23,50) }
                 });
+            
         }else{            
             cordova.plugins.notification.local.requestPermission(function (granted) {
                 if(granted){
