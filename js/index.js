@@ -30,13 +30,20 @@ function onDeviceReady() {
     console.log(device.cordova);
     setTimeout(function(){navigator.vibrate(1000);}, 1000);
 
-    cordova.plugin.notification.local.schedule({
-        id: 9,
-        title: "Test notification 9",
-        text: "This is a test notification",
-        at: new Date( new Date().getTime() + 10 )
-        // data: { secret:key }
-    });
+    function setNoti(){
+        mintime = Date();
+        mintime.setMinutes(mintime.getMinutes() + 1);
+        cordova.plugin.notification.local.schedule({
+            id: 9,
+            title: "Test notification 9",
+            text: "This is a test notification",
+            at: new Date( new Date().getTime() + 10 )
+            // data: { secret:key }
+        });
+
+        alert('not added');
+
+    }
 }
 
 $(document).ready(function(){  
@@ -231,6 +238,8 @@ function addLikeEvent(vIdEvent){
         ejecutaSQL(vQry,0); console.log(vQry);
         arrEventLikes.push(idEveFinal);
         $("#imgL_" + vIdEvent).attr('src','img/like_blue.png');
+
+        setNoti();
     }else{
         ejecutaSQL("Delete from eventos_like where id='" + idEveFinal + "'",0);
         arrEventLikes.splice(flag,1);
