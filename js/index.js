@@ -216,7 +216,7 @@ function showPublicaciones(){
             break;
             case 102:
                 console.log(102);
-                vStrHtml += '<iframe class="ifrmFace" width="100%" height="200px" src="'+ arrPubData[i].url +'" allowfullscreen></iframe>';
+                vStrHtml += '<iframe class="ifrmFace" width="100%" height="200px" src="'+ arrPubData[i].url +'" frameborder="1" allowfullscreen></iframe>';
                 //<iframe class="ifrmFace" src="'+ arrPubData[i].url +'" width="100%"  height="200px" style="border:none;overflow:hidden" scrolling="no" frameborder="1" allowTransparency="true" allow="encrypted-media" allowFullScreen="true" style="padding-bottom: 0px;"></iframe>';
             break;
         }
@@ -345,11 +345,7 @@ function getCalendar(vFlagEv){
                 }
                 vobj = drawListItem1(vHora, vLugar, arrEventosData[i].name, arrEventosData[i].descript, 'img/calendar_cls.png', arrEventosData[i].id_ev + '_F');
                 $("#dvFavs").append(vobj);
-            }          
-            if(i==3){                
-                vobj =  ('07-Mar-2020');
-                $("#dvFavs").append(vobj);
-            }
+            }    
         } 
 
         for(i=0;i<arrEventFavs.length;i++){            
