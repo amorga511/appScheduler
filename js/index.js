@@ -216,7 +216,7 @@ function showPublicaciones(){
             break;
             case 102:
                 console.log(102);
-                vStrHtml += '<iframe class="ifrmFace" width="100%" height="200px" src="'+ arrPubData[i].url +'" frameborder="1" allowfullscreen></iframe>';
+                vStrHtml += '<iframe class="ifrmFace" width="100%" height="200px" src="'+ arrPubData[i].url +'" style="border:none;overflow:hidden" frameborder="1" allowfullscreen></iframe>';
                 //<iframe class="ifrmFace" src="'+ arrPubData[i].url +'" width="100%"  height="200px" style="border:none;overflow:hidden" scrolling="no" frameborder="1" allowTransparency="true" allow="encrypted-media" allowFullScreen="true" style="padding-bottom: 0px;"></iframe>';
             break;
         }
