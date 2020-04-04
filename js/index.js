@@ -5,6 +5,13 @@ var arrFileForms = [];
 
 var arrEventFavs = [];
 var arrEventLikes = [];
+var arrEventosData = [];
+var arrEventosLecturas = [];
+var arrPubData = [];
+
+var arrMeonths = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+var ulrWS = 'http://iteshn.000webhostapp.com/ws_app01/service_app01.php';
 
 var arrGPS = [{"id":101, "name":"Catedral Inmaculada Concepcion", "det":"Cronograma de actividades semana santa 2020 <br />Del 4-apr al 11-apr", "state":1},
 {"id":102, "name":"Location B dnl", "det":"Location main church at down town central park", "state":1},
@@ -14,15 +21,15 @@ var arrGPS = [{"id":101, "name":"Catedral Inmaculada Concepcion", "det":"Cronogr
 {"id":202, "name":"Location B tgu", "det":"Location main church at down town central park", "state":1}];
 
 
-var arrEvents = [{"id_ev":"dnl202001", "name":"Test event 1", "desc":"description of event", "fecha":2020030051780, "status":100},
-{"id_ev":"dnl202002", "name":"Test event 2", "desc":"description of event", "fecha":2020030052080, "status":100},
-{"id_ev":"dnl202003", "name":"Test event 3", "desc":"description of event asdf asdf asdf asdf asdf asdf asdfsa ", "fecha":2020030052280, "status":100},
-{"id_ev":"dnl202003", "name":"Test event 3", "desc":"description of event asdf asdf asdf asdf asdf asdf asdfsa ", "fecha":2020030052280, "status":100},
-{"id_ev":"dnl202003", "name":"Test event 3", "desc":"description of event asdf asdf asdf asdf asdf asdf asdfsa ", "fecha":2020030052280, "status":100},
-{"id_ev":"dnl202003", "name":"Test event 3", "desc":"description of event asdf asdf asdf asdf asdf asdf asdfsa ", "fecha":2020030052280, "status":100},
-{"id_ev":"dnl202003", "name":"Test event 3", "desc":"description of event asdf asdf asdf asdf asdf asdf asdfsa ", "fecha":2020030052280, "status":100},
-{"id_ev":"dnl202003", "name":"Test event 3", "desc":"description of event asdf asdf asdf asdf asdf asdf asdfsa ", "fecha":2020030052280, "status":100},
-{"id_ev":"dnl202003", "name":"Test event 3", "desc":"description of event asdf asdf asdf asdf asdf asdf asdfsa ", "fecha":2020030052280, "status":100}];
+var arrEvents = [{"id_ev":"dnl202001", "name":"Test event 1", "desc":'description of event', "fecha":202003052280, "status":100},
+{"id_ev":"dnl202002", "name":"Test event 2", "desc":"description of event", "fecha":202003052280, "status":100},
+{"id_ev":"dnl202003", "name":"Test event 3", "desc":"description of event asdf asdf asdf asdf asdf asdf asdfsa ", "fecha":202003052280, "status":100},
+{"id_ev":"dnl202003", "name":"Test event 3", "desc":"description of event asdf asdf asdf asdf asdf asdf asdfsa ", "fecha":202003052280, "status":100},
+{"id_ev":"dnl202003", "name":"Test event 3", "desc":"description of event asdf asdf asdf asdf asdf asdf asdfsa ", "fecha":202003052280, "status":100},
+{"id_ev":"dnl202003", "name":"Test event 3", "desc":"description of event asdf asdf asdf asdf asdf asdf asdfsa ", "fecha":202003052280, "status":100},
+{"id_ev":"dnl202003", "name":"Test event 3", "desc":"description of event asdf asdf asdf asdf asdf asdf asdfsa ", "fecha":202003052280, "status":100},
+{"id_ev":"dnl202003", "name":"Test event 3", "desc":"description of event asdf asdf asdf asdf asdf asdf asdfsa ", "fecha":202003052280, "status":100},
+{"id_ev":"dnl202003", "name":"Test event 3", "desc":"description of event asdf asdf asdf asdf asdf asdf asdfsa ", "fecha":202003052280, "status":100}];
 
 
 document.addEventListener("deviceready", onDeviceReady, false);
@@ -30,17 +37,24 @@ function onDeviceReady() {
     console.log(device.cordova);      
 }
 
-function oneNotification() {  
-    xv = new Date(2020, 3, 3, 7,05);
+function oneNotification(id_not, vDate, vTitle, vDet) { 
+    vYear = vDate.toString().substring(0,4);
+    vMon = vDate.toString().substring(4,6);
+    vDay = vDate.toString().substring(6,8); 
+    vHr = vDate.toString().substring(8,10);     
+    vMn = vDate.toString().substring(10,12);
+
+    xv = new Date(vYear, vMon-1, vDay, vHr, vMn);
     //alert(xv);
     cordova.plugins.notification.local.hasPermission(function (granted) { 
         if(granted){            
             cordova.plugins.notification.local.schedule({
-                title: 'Mercados Bursatiles',
-                text: 'Evento Proximo a Iniciar',                
-                //attachments: ['https://www.vaticannews.va/content/dam/vaticannews/agenzie/images/srv/2020/04/02/2020-04-02-messa-santa-marta/1585806777192.JPG/_jcr_content/renditions/cq5dam.thumbnail.cropped.750.422.jpeg'],
-                trigger: { at: xv }
-                });
+                id:id_not,
+                title: vTitle,
+                text: vDet                
+                //attachments: ['https://www.vaticannews.va/content/dam/vaticannews/agenzie/images/srv/2020/04/02/2020-04-02-messa-santa-marta/1585806777192.JPG/_jcr_content/renditions/cq5dam.thumbnail.cropped.750.422.jpeg']
+                //trigger: { at: xv }
+            });
             
         }else{            
             cordova.plugins.notification.local.requestPermission(function (granted) {
@@ -59,6 +73,24 @@ function oneNotification() {
 $(document).ready(function(){  
     switch_menu('mHome');
     resizer();
+    getEventFServer();    
+    getLecturasFServer();
+    getPublicacionesFServer();
+    arrEventosData = arrEvents;
+    //vDate = 202004031100;
+/*
+    vYear = vDate.toString().substring(0,4);
+    vMon = vDate.toString().substring(4,6);
+    vDay = vDate.toString().substring(6,8); 
+    vHr = vDate.toString().substring(8,10);     
+    vMn = vDate.toString().substring(10,12); 
+
+
+    console.log(vYear);
+    console.log(vMon);
+    console.log(vDay);
+    console.log(vHr);
+    console.log(vMn);*/
     $("#mHome").css('border-top', 'solid 3px red');
 
     $(".menubar a").on('click', function(e){
@@ -74,14 +106,62 @@ $(document).ready(function(){
     var contentType = "image/png";
     // if cordova.file is not available use instead :
     //var folderpath = "file:///storage/emulated/0/";
-    setTimeout(function(){        
+    /*setTimeout(function(){        
         var folderpath = cordova.file.externalRootDirectory;
         var filename = "ourcodeworld.png";
         alert(folderpath);
         savebase64AsImageFile(folderpath,filename,myBase64,contentType);
-    },10000);
+    },10000);*/
 
 });
+
+function getPublicacionesFServer(){
+    $.ajax( {type:'POST',
+            url: ulrWS,
+            dataType:'json',
+            data: {m:102},
+            success: function(data){ 
+                console.log(data);
+                arrPubData = data; 
+                showPublicaciones();
+            },
+            error: function(data){
+                alert('Error consultando el servidor..');
+            }
+    });           
+}
+
+function getEventFServer(vDv){
+    $.ajax( {type:'POST',
+            url: ulrWS,
+            dataType:'json',
+            data: {m:100},
+            success: function(data){ 
+                console.log(data);
+                arrEventosData = data; 
+                getCalendar(vDv);
+            },
+            error: function(data){
+                alert('Error consultando el servidor..');
+            }
+    });           
+}
+
+function getLecturasFServer(){
+    $.ajax( {type:'POST',
+            url: ulrWS,
+            dataType:'json',
+            data: {m:101},
+            success: function(data){ 
+                console.log(data);
+                arrLecturasData = data; 
+                listLecturas();
+            },
+            error: function(data){
+                alert('Error consultando el servidor..');
+            }
+    });           
+}
 
 function resizer(){
     vWithFace = $(".ifrmFace").width();
@@ -106,18 +186,18 @@ function switch_menu(vId){
     }if(vId=='mCalendr'){        
         hideDivs();
         $("#dvCalendr").show();
-        getCalendar(1);
+        getEventFServer(1);
     }if(vId=='mFavs'){        
         hideDivs();
-        $("#dvFavs").show();
-        getCalendar(2);
+        $("#dvFavs").show();        
+        getEventFServer(2);
     }if(vId=='mMyOrg'){        
         hideDivs();
         $("#dvMyOrg").show();
     }if(vId=='mBook'){        
         hideDivs();
         $("#dvBook").show();
-        listLecturas();
+        getLecturasFServer();
     }
 }
 
@@ -150,9 +230,71 @@ function mainPosts(){
     $("#dvHome").append(obj);
 }
 
+
+function showPublicaciones(){
+    vStrHtml = '';
+    $("#dvHome").html('');
+    for(i=0;i<arrPubData.length;i++){
+        vStrHtml = '<div class="card" style="padding-bottom: 10px; padding-top:0px; border-bottom:solid #D8D8D8 4px;">';
+        switch(parseInt(arrPubData[i].type))
+        {
+            case 100:
+                console.log(100)
+            break;
+            case 101:
+                console.log(101)
+            break;
+            case 102:
+                console.log(102);
+                vStrHtml = '<iframe class="ifrmFace" src="'+ arrPubData[i].url +'" width="100%"  height="200px" style="border:none;overflow:hidden" scrolling="no" frameborder="1" allowTransparency="true" allow="encrypted-media" allowFullScreen="true" style="padding-bottom: 0px;"></iframe>';
+            break;
+        }
+        vStrHtml += '<div class="card-body">';
+        vStrHtml += '<h5 class="card-title">'+ arrPubData[i].title +'</h5>';
+        vStrHtml += '<p class="card-text">'+ arrPubData[i].descript +'</p>';
+        vStrHtml += '<label class="cfech">'+ arrPubData[i].fecha +'</label>';
+        vStrHtml += '</div>';
+        vStrHtml += '</div>';
+
+        
+        $("#dvHome").append(vStrHtml);
+    }
+}
+
 function listLecturas(){
-    obj = drawListItem2('04-Abr-2020', '', 0);
-    $("#dvBook").prepend(obj);
+    vFechFlag =0;
+    vFechLoop = 0;
+    $("#dvBook").html('');
+    if(arrLecturasData.length>0){         
+        for(i=0;i<arrLecturasData.length;i++){
+            vFechFlag = arrLecturasData[i].fecha; 
+            if(vFechFlag!=vFechLoop){                    
+                vmonth = arrMeonths[parseInt(vFechFlag.substring(4,6))-1];        
+                vobj =  drawListItem2(vFechFlag.substring(6,8) + '-' + vmonth + '-' + vFechFlag.substring(0,4));
+                $("#dvBook").append(vobj);
+                vFechLoop = vFechFlag;
+            }
+            if(arrLecturasData[i].lectura1.toString()!='0'){                
+                vobj = '<div style="padding:15px;">' + arrLecturasData[i].lectura1;
+                vobj += '</div>';
+                $("#dvBook").append(vobj);
+            }if(arrLecturasData[i].lectura2.toString()!='0'){                
+                vobj = '<div style="padding:15px;">' + arrLecturasData[i].lectura2;
+                vobj += '</div>';
+                $("#dvBook").append(vobj);
+            }if(arrLecturasData[i].lectura3.toString()!='0'){                
+                vobj = '<div style="padding:15px;">' + arrLecturasData[i].lectura3;
+                vobj += '</div>';
+                $("#dvBook").append(vobj);
+            }if(arrLecturasData[i].lectura4.toString()!='0'){                
+                vobj = '<div style="padding:15px;">' + arrLecturasData[i].lectura4;
+                vobj += '</div>';
+                $("#dvBook").append(vobj);
+            }
+            $("#dvBook").append('<div style="border-bottom:solid #D8D8D8 6px"></div>');
+        } 
+    }
+
 }
 
 function getGPS(){
@@ -179,22 +321,31 @@ function getGPS(){
 
 function getCalendar(vFlagEv){
     strHtml = "";
-        
+    vFechFlag = 0;  
+    vFechLoop = 0; 
+    vHora = 'NA';
+    vLugar = 'NA';
+    
     if(vFlagEv==1){
-        $("#dvCalendr").html(strHtml);
-        vobj = drawListItem2('06-Mar-2020');
-        $("#dvCalendr").append(vobj);
+        $("#dvCalendr").html(strHtml);        
 
-        for(i=0;i<arrEvents.length;i++){
-            console.log(arrEvents[i].name);
-            
-            vobj = drawListItem1(arrEvents[i].name, arrEvents[i].desc, 'img/calendar_cls.png', arrEvents[i].id_ev + "_E");
-            $("#dvCalendr").append(vobj);
-            if(i==3){                
-                vobj = drawListItem2('07-Mar-2020');
+        if(arrEventosData.length>0){         
+            for(i=0;i<arrEventosData.length;i++){
+                vFechFlag = arrEventosData[i].fecha.toString().substring(0,8);  
+                vHora = getTimeFormat(100, arrEventosData[i].fecha.toString().substring(8,12)); 
+                vLugar = arrEventosData[i].lugar;           
+                if(vFechFlag!=vFechLoop){                    
+                    vmonth = arrMeonths[parseInt(vFechFlag.substring(4,6))-1];        
+                    vobj =  drawListItem2(vFechFlag.substring(6,8) + '-' + vmonth + '-' + vFechFlag.substring(0,4));
+                    $("#dvCalendr").append(vobj);
+                    vFechLoop = vFechFlag;
+                }
+                
+                vobj = drawListItem1(vHora, vLugar, arrEventosData[i].name, arrEventosData[i].descript, 'img/calendar_cls.png', arrEventosData[i].id_ev + "_E");
                 $("#dvCalendr").append(vobj);
-            }
-        } 
+             } 
+        }
+        
         for(i=0;i<arrEventFavs.length;i++){            
             $("#img_" + arrEventFavs[i] + "_E").attr('src','img/star_ye.png');
             console.log(arrEventFavs[i]);
@@ -206,18 +357,26 @@ function getCalendar(vFlagEv){
     }else if(vFlagEv==2){
         
         $("#dvFavs").html(strHtml);
-        vobj = drawListItem2('06-Mar-2020');
-        $("#dvFavs").append(vobj);
 
-        for(i=0;i<arrEvents.length;i++){
-            console.log(arrEvents[i].name);
-            flagFav = arrEventFavs.indexOf(arrEvents[i].id_ev);
+        for(i=0;i<arrEventosData.length;i++){
+            console.log(arrEventosData[i].name);
+            flagFav = arrEventFavs.indexOf(arrEventosData[i].id_ev);
+
             if(flagFav>-1){
-                vobj = drawListItem1(arrEvents[i].name, arrEvents[i].desc, 'img/calendar_cls.png', arrEvents[i].id_ev + '_F');
+                vFechFlag = arrEventosData[i].fecha.toString().substring(0,8);     
+                vHora = getTimeFormat(100, arrEventosData[i].fecha.toString().substring(8,12)); 
+
+                if(vFechFlag!=vFechLoop){                    
+                    vmonth = arrMeonths[parseInt(vFechFlag.substring(4,6))-1];        
+                    vobj =  drawListItem2(vFechFlag.substring(6,8) + '-' + vmonth + '-' + vFechFlag.substring(0,4));
+                    $("#dvFavs").append(vobj);
+                    vFechLoop = vFechFlag;
+                }
+                vobj = drawListItem1(vHora, vLugar, arrEventosData[i].name, arrEventosData[i].descript, 'img/calendar_cls.png', arrEventosData[i].id_ev + '_F');
                 $("#dvFavs").append(vobj);
             }          
             if(i==3){                
-                vobj = drawListItem2('07-Mar-2020');
+                vobj =  ('07-Mar-2020');
                 $("#dvFavs").append(vobj);
             }
         } 
@@ -260,6 +419,7 @@ function addLikeEvent(vIdEvent){
 function addFavsEvent(idEventFav){
     idEveFinal = idEventFav.substring(0, idEventFav.length-2);
     flag =  arrEventFavs.indexOf(idEveFinal);
+    var vFechEvent;
     if(flag==-1){
         vQry = "insert into eventos_favs values('";
         vQry += idEveFinal + "','default')";
@@ -267,7 +427,16 @@ function addFavsEvent(idEventFav){
         ejecutaSQL(vQry,0); console.log(vQry);
         arrEventFavs.push(idEveFinal);
         $("#img_" + idEventFav).attr('src','img/star_ye.png');
-        oneNotification();
+
+        for(i=0;i<arrEventosData.length;i++){
+            console.log(arrEventosData[i].id_ev);
+            if(arrEventosData[i].id_ev==idEveFinal){
+                vFechEvent = arrEventosData[i].fecha;
+                oneNotification(idEveFinal, parseInt(vFechEvent), arrEventosData[i].name, arrEventosData[i].descript);
+                break;
+            }
+        }
+        console.log(idEveFinal + '-' + vFechEvent);
 
     }else{
         ejecutaSQL("Delete from eventos_favs where id='" + idEveFinal + "'",0);
@@ -328,7 +497,7 @@ function getHMS(){
 }
 
 
-function drawListItem1(vTitle, vDesc, vImg, vId){
+function drawListItem1(vHr, vLugar, vTitle, vDesc, vImg, vId){
 
     strHtml = '';
 
@@ -336,7 +505,10 @@ function drawListItem1(vTitle, vDesc, vImg, vId){
     strHtml += "<table width=\"100%\">";
     strHtml += "<tr>";
     strHtml += "<td width=\"70px\"><img src=\""+ vImg +"\" width=\"50px\" style=\"max-height:60px\"/></td>";
-    strHtml += "<td><b>"+ vTitle +"</b><br>"+ vDesc +"</td>";
+    strHtml += "<td><b>"+ vTitle +"</b>";
+    strHtml += "<br><b>Hora: </b>" + vHr;
+    strHtml += "<br><b>Lugar: </b>" + vLugar;
+    strHtml += "<br><i>"+ vDesc +"</i></td>";
     strHtml += "</tr><tr><td></td><td>";
     strHtml += "<ul class=\"smenu_intr\">";
     strHtml += "<li><a href=\"javascript:void(0)\"  onclick=\"addLikeEvent('"+ vId +"')\" id=\"smLike\"><img id=\"imgL_"+ vId +"\" src=\"img/like_gr.png\" width=\"18px\" height=\"20x\"/></a></li>";
@@ -349,7 +521,7 @@ function drawListItem1(vTitle, vDesc, vImg, vId){
     return strHtml;
 }
 
-function drawListItem2(vTitle, vDesc, vId){
+function  drawListItem2(vTitle, vDesc, vId){
 
     strHtml = '';
 
@@ -430,4 +602,36 @@ function savebase64AsImageFile(folderpath,filename,content,contentType){
             });
 		});
     });
+}
+
+function getTimeFormat(vFormat, vHrs){
+    vH = vHrs.toString().substring(0,2);
+    vM = vHrs.toString().substring(2,4);
+    vStrH = '';
+    vStrM = '';
+    vSigno = '';
+    vStrFinal = '';
+
+    if(parseInt(vH)==0 || parseInt(vH)>12){
+        
+        if (parseInt(vH)==0){
+            vStrH = '12';
+            vSigno = 'AM'
+        }else{
+            vStrH = vH-12;
+            vSigno = 'PM'
+        }
+    }
+    if(parseInt(vM)<10){
+        vStrM = '0' + vM;
+    }else{        
+        vStrM = vM;
+    }
+
+    if(vFormat==100){
+        vStrFinal = vStrH + ':' + vStrM + ' ' + vSigno;
+    }else{
+        vStrFinal = vH + ':' + vStrM;
+    }
+    return vStrFinal;
 }
