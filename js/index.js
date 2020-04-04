@@ -34,15 +34,15 @@ function oneNotification(id_not, vDate, vTitle, vDet) {
     vMn = vDate.toString().substring(10,12);
 
     xv = new Date(vYear, vMon-1, vDay, vHr, vMn);
-    alert(xv + '-' + id_not + '-' + vTitle + '-' + vDet);
+    //alert(xv + '-' + id_not + '-' + vTitle + '-' + vDet);
 
     cordova.plugins.notification.local.hasPermission(function (granted) { 
         if(granted){            
             cordova.plugins.notification.local.schedule({
                 title: vTitle,
-                text: vDet                
+                text: vDet,               
                 //attachments: ['https://www.vaticannews.va/content/dam/vaticannews/agenzie/images/srv/2020/04/02/2020-04-02-messa-santa-marta/1585806777192.JPG/_jcr_content/renditions/cq5dam.thumbnail.cropped.750.422.jpeg']
-                //trigger: { at: xv }
+                trigger: { at: xv }
             });
             
         }else{            
@@ -204,7 +204,7 @@ function showPublicaciones(){
     vStrHtml = '';
     $("#dvHome").html('');
     for(i=0;i<arrPubData.length;i++){
-        vStrHtml = '<div class="card" style="padding-bottom: 10px; padding-top:0px; border-bottom:solid #D8D8D8 4px;">';
+        vStrHtml = '<div class="card" style="padding-bottom: 10px; padding-top:0px; border-bottom:solid #D8D8D8 8px;">';
         switch(parseInt(arrPubData[i].type))
         {
             case 100:
