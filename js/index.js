@@ -34,11 +34,11 @@ function oneNotification(id_not, vDate, vTitle, vDet) {
     vMn = vDate.toString().substring(10,12);
 
     xv = new Date(vYear, vMon-1, vDay, vHr, vMn);
-    //alert(xv);
+    alert(xv + '-' + id_not + '-' + vTitle + '-' + vDet);
+
     cordova.plugins.notification.local.hasPermission(function (granted) { 
         if(granted){            
             cordova.plugins.notification.local.schedule({
-                id:id_not,
                 title: vTitle,
                 text: vDet                
                 //attachments: ['https://www.vaticannews.va/content/dam/vaticannews/agenzie/images/srv/2020/04/02/2020-04-02-messa-santa-marta/1585806777192.JPG/_jcr_content/renditions/cq5dam.thumbnail.cropped.750.422.jpeg']
