@@ -166,6 +166,7 @@ function switch_menu(vId){
         hideDivs();
         $("#dvHome").show();        
         getPublicacionesFServer();
+        $("#appTitle").html('Publicaciones');
     }
     if(vId=='mMenu'){        
         hideDivs();
@@ -178,10 +179,12 @@ function switch_menu(vId){
         hideDivs();
         $("#dvCalendr").show();
         getEventFServer(1);
+        $("#appTitle").html('Eventos');
     }if(vId=='mFavs'){        
         hideDivs();
         $("#dvFavs").show();        
         getEventFServer(2);
+        $("#appTitle").html('Eventos Favoritos');
     }if(vId=='mMyOrg'){        
         hideDivs();
         $("#dvMyOrg").show();
@@ -189,6 +192,7 @@ function switch_menu(vId){
         hideDivs();
         $("#dvBook").show();
         getLecturasFServer();
+        $("#appTitle").html('Lecturas Diarias');
     }
 }
 
