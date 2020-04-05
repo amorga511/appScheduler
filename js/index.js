@@ -23,7 +23,7 @@ var arrGPS = [{"id":101, "name":"Catedral Inmaculada Concepcion", "det":"Cronogr
 
 document.addEventListener("deviceready", onDeviceReady, false);
 function onDeviceReady() {
-    console.log(device.cordova);      
+    //console.log(device.cordova);      
 }
 
 function oneNotification(id_not, vDate, vTitle, vDet) { 
@@ -64,6 +64,8 @@ $(document).ready(function(){
     resizer();
     getEventFServer();    
     getLecturasFServer();
+    getFavsDB();
+    getLikesDB();
     //vDate = 202004031100;
 /*
     vYear = vDate.toString().substring(0,4);
@@ -81,7 +83,7 @@ $(document).ready(function(){
     $("#mHome").css('border-top', 'solid 3px red');
 
     $(".menubar a").on('click', function(e){
-        console.log(e.currentTarget.id);
+        //console.log(e.currentTarget.id);
         $(".menubar a").css('border-top','solid 3px black');
         $(this).css('border-top', 'solid 3px red');
 
@@ -108,7 +110,7 @@ function getPublicacionesFServer(){
             dataType:'json',
             data: {m:102},
             success: function(data){ 
-                console.log(data);
+                //console.log(data);
                 arrPubData = data; 
                 showPublicaciones();
             },
@@ -124,7 +126,7 @@ function getEventFServer(vDv){
             dataType:'json',
             data: {m:100},
             success: function(data){ 
-                console.log(data);
+                //console.log(data);
                 arrEventosData = data; 
                 getCalendar(vDv);
             },
@@ -140,7 +142,7 @@ function getLecturasFServer(){
             dataType:'json',
             data: {m:101},
             success: function(data){ 
-                console.log(data);
+                //console.log(data);
                 arrLecturasData = data; 
                 listLecturas();
             },
@@ -153,12 +155,14 @@ function getLecturasFServer(){
 function resizer(){
     vWithFace = $(".ifrmFace").width();
     $(".ifrmFace").height(vWithFace*0.57);
-    console.log(vWithFace);
+    //console.log(vWithFace);
 }
 
 
 function switch_menu(vId){
     if(vId=='mHome'){ 
+        getFavsDB();
+        getLikesDB();
         hideDivs();
         $("#dvHome").show();        
         getPublicacionesFServer();
@@ -198,7 +202,37 @@ function hideDivs(){
     $("#dvBook").hide();   
 }
 
+function getFavsDB()
+{
+    arrEventFavs = [];
+    db.transaction(function(cmd2){
+        cmd2.executeSql("SELECT * FROM eventos_favs", [], function (cmd2, results) {
+            var len = results.rows.length;
+            if(len>0){
+                for(i=0;i<len;i++){                    
+                    arrEventFavs.push(results.rows.item(i).id);
+                    //console.log(results.rows.item(i).id);
+                }
+            }
+        });
+    });
+}
 
+function getLikesDB()
+{
+    arrEventLikes = [];
+    db.transaction(function(cmd2){
+        cmd2.executeSql("SELECT * FROM eventos_like", [], function (cmd2, results) {
+            var len = results.rows.length;
+            if(len>0){
+                for(i=0;i<len;i++){                    
+                    arrEventLikes.push(results.rows.item(i).id);
+                    //console.log(results.rows.item(i).id);
+                }
+            }
+        });
+    });
+}
 
 function showPublicaciones(){
     vStrHtml = '';
@@ -208,14 +242,15 @@ function showPublicaciones(){
         switch(parseInt(arrPubData[i].type))
         {
             case 100:
-                console.log(100)
+                //console.log(100)
+                null;
             break;
             case 101:
-                console.log(101)
+                //console.log(101)
                 vStrHtml += '<img class="card-img-top" src="'+ arrPubData[i].url +'" alt="image not found">';
             break;
             case 102:
-                console.log(102);
+                //console.log(102);
                 vStrHtml += '<iframe class="ifrmFace" width="100%" height="200px" src="'+ arrPubData[i].url +'" style="border:none;overflow:hidden" frameborder="1" allowfullscreen></iframe>';
                 //<iframe class="ifrmFace" src="'+ arrPubData[i].url +'" width="100%"  height="200px" style="border:none;overflow:hidden" scrolling="no" frameborder="1" allowTransparency="true" allow="encrypted-media" allowFullScreen="true" style="padding-bottom: 0px;"></iframe>';
             break;
@@ -227,7 +262,6 @@ function showPublicaciones(){
         vStrHtml += '</div>';
         vStrHtml += '</div>';
 
-        
         $("#dvHome").append(vStrHtml);
     }
 }
@@ -273,8 +307,7 @@ function getGPS(){
                     
     $("#dvOrgs").html(strHtml);
     for(i=0;i<arrGPS.length;i++){
-        console.log(arrGPS[i].name);
-
+        //console.log(arrGPS[i].name);
         
         vobj = drawListItem1(arrGPS[i].name, arrGPS[i].det, 'img/gps_clr.png', 0);
 
@@ -319,18 +352,18 @@ function getCalendar(vFlagEv){
         
         for(i=0;i<arrEventFavs.length;i++){            
             $("#img_" + arrEventFavs[i] + "_E").attr('src','img/star_ye.png');
-            console.log(arrEventFavs[i]);
+            //console.log(arrEventFavs[i]);
         }
         for(i=0;i<arrEventLikes.length;i++){            
             $("#imgL_" + arrEventLikes[i] + "_E").attr('src','img/like_blue.png');
-            console.log(arrEventLikes[i]);
+            //console.log(arrEventLikes[i]);
         }
     }else if(vFlagEv==2){
         
         $("#dvFavs").html(strHtml);
 
         for(i=0;i<arrEventosData.length;i++){
-            console.log(arrEventosData[i].name);
+            //console.log(arrEventosData[i].name);
             flagFav = arrEventFavs.indexOf(arrEventosData[i].id_ev);
 
             if(flagFav>-1){
@@ -350,18 +383,19 @@ function getCalendar(vFlagEv){
 
         for(i=0;i<arrEventFavs.length;i++){            
             $("#img_" + arrEventFavs[i] + "_F").attr('src','img/star_ye.png');
-            console.log(arrEventFavs[i]);
+            //console.log(arrEventFavs[i]);
         }
         for(i=0;i<arrEventLikes.length;i++){            
             $("#imgL_" + arrEventLikes[i] + "_F").attr('src','img/like_blue.png');
-            console.log(arrEventLikes[i]);
+            //console.log(arrEventLikes[i]);
         }
     }
        
 }
 
 function showdetGPS(event){
-    console.log(event);
+    //console.log(event);
+    null;
 }
 
 function addLikeEvent(vIdEvent){
@@ -371,15 +405,39 @@ function addLikeEvent(vIdEvent){
         vQry = "insert into eventos_like values('";
         vQry += idEveFinal + "','default')";
         //ejecutaSQL("Delete from eventos_favs where id='" + idEventFav + "'",0);
-        ejecutaSQL(vQry,0); console.log(vQry);
-        arrEventLikes.push(idEveFinal);
-        $("#imgL_" + vIdEvent).attr('src','img/like_blue.png');
+        ejecutaSQL(vQry,0); 
+        //console.log(vQry);
+        $.ajax( {type:'POST',
+            url: ulrWS,
+            dataType:'json',
+            data: {m:201, vid:idEveFinal, vV:1},
+            success: function(data){ 
+                //console.log(data);
+                arrEventLikes.push(idEveFinal);
+                $("#imgL_" + vIdEvent).attr('src','img/like_blue.png');
+            },
+            error: function(data){
+                alert('Error consultando el servidor..');
+            }
+        }); 
+        
     }else{
         ejecutaSQL("Delete from eventos_like where id='" + idEveFinal + "'",0);
-        arrEventLikes.splice(flag,1);
-        $("#imgL_" + vIdEvent).attr('src','img/like_gr.png');
+        $.ajax( {type:'POST',
+            url: ulrWS,
+            dataType:'json',
+            data: {m:201, vid:idEveFinal, vV:-1},
+            success: function(data){ 
+                //console.log(data);
+                arrEventLikes.splice(flag,1);
+                $("#imgL_" + vIdEvent).attr('src','img/like_gr.png');
+            },
+            error: function(data){
+                alert('Error consultando el servidor..');
+            }
+        });
     }    
-    console.log(arrEventLikes);   
+    //console.log(arrEventLikes);   
     $("#dvHeader").focus();
 }
 
