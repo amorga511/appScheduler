@@ -630,17 +630,17 @@ function getTimeFormat(vFormat, vHrs){
             vStrH = '12';
             vSigno = 'AM'
         }else{
-            vStrH = vH-12;
+            vStrH = parseInt(vH)-12;
             vSigno = 'PM'
         }
     }else{
-        vStrH = vH;
+        vStrH = parseInt(vH);
         vSigno = 'AM'
     }
     if(parseInt(vM)<10){
-        vStrM = '0' + vM;
+        vStrM = '0' + parseInt(vM);
     }else{        
-        vStrM = vM;
+        vStrM = parseInt(vM);
     }
 
     if(vFormat==100){
