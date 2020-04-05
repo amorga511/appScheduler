@@ -373,7 +373,8 @@ function getCalendar(vFlagEv){
             if(flagFav>-1){
                 vFechFlag = arrEventosData[i].fecha.toString().substring(0,8);     
                 vHora = getTimeFormat(100, arrEventosData[i].fecha.toString().substring(8,12)); 
-
+                vLugar = arrEventosData[i].lugar;  
+                
                 if(vFechFlag!=vFechLoop){                    
                     vmonth = arrMeonths[parseInt(vFechFlag.substring(4,6))-1];        
                     vobj =  drawListItem2(vFechFlag.substring(6,8) + '-' + vmonth + '-' + vFechFlag.substring(0,4));
