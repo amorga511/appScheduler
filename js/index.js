@@ -23,7 +23,11 @@ var arrGPS = [{"id":101, "name":"Catedral Inmaculada Concepcion", "det":"Cronogr
 
 document.addEventListener("deviceready", onDeviceReady, false);
 function onDeviceReady() {
-    //console.log(device.cordova);      
+    //console.log(device.cordova);   
+    window.plugins.OneSignal
+    .startInit("f3757fb3-0558-43f8-9c89-921d52499cef")
+    .handleNotificationOpened(notificationOpenedCallback)
+    .endInit();   
 }
 
 function oneNotification(id_not, vDate, vTitle, vDet) { 
@@ -374,7 +378,7 @@ function getCalendar(vFlagEv){
                 vFechFlag = arrEventosData[i].fecha.toString().substring(0,8);     
                 vHora = getTimeFormat(100, arrEventosData[i].fecha.toString().substring(8,12)); 
                 vLugar = arrEventosData[i].lugar;  
-                
+
                 if(vFechFlag!=vFechLoop){                    
                     vmonth = arrMeonths[parseInt(vFechFlag.substring(4,6))-1];        
                     vobj =  drawListItem2(vFechFlag.substring(6,8) + '-' + vmonth + '-' + vFechFlag.substring(0,4));
