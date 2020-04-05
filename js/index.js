@@ -24,6 +24,11 @@ var arrGPS = [{"id":101, "name":"Catedral Inmaculada Concepcion", "det":"Cronogr
 document.addEventListener("deviceready", onDeviceReady, false);
 function onDeviceReady() {
     //console.log(device.cordova);   
+
+    var notificationOpenedCallback = function(jsonData) {
+        console.log('notificationOpenedCallback: ' + JSON.stringify(jsonData));
+      };
+      
     window.plugins.OneSignal
     .startInit("f3757fb3-0558-43f8-9c89-921d52499cef")
     .handleNotificationOpened(notificationOpenedCallback)
